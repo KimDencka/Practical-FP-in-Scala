@@ -1,0 +1,7 @@
+/.bsp/
+/.idea/
+/target/
+/project/target/
+/project/project/target/
+/modules/core/target/
+/modules/tests/target/
