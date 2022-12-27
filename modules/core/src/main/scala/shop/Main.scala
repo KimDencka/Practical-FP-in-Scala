@@ -10,17 +10,6 @@ import org.typelevel.log4cats.{ Logger, SelfAwareStructuredLogger }
 import retry.RetryPolicies._
 import retry.RetryPolicy
 import shop.config.Config
-import shop.domain.brand.BrandService
-import shop.domain.cart.CartService
-import shop.domain.category.CategoryService
-import shop.domain.health.HealthService
-import shop.domain.item._
-import shop.domain.order.OrderService
-import shop.domain.payment.PaymentService
-import shop.infrastructure.HealthRepository
-import shop.infrastructure.clients._
-import shop.infrastructure.postgres._
-import shop.infrastructure.redis._
 import shop.modules.{ HttpApi, Repositories, Security, Services }
 import shop.programs.Checkout
 import shop.resources._
@@ -47,16 +36,7 @@ object Main extends IOApp {
                 val checkout: Checkout[IO] =
                   Checkout[IO](services.payment, repositories.cart, repositories.order, retryPolicy)
 
-                val api = new HttpApi[IO](
-                  services.cart,
-                  services.brand,
-                  services.category,
-                  services.item,
-                  services.order,
-                  services.health,
-                  security,
-                  checkout
-                )
+                val api = new HttpApi[IO](services, security, checkout)
                 cfg.httpServerConfig -> api.httpApp
               }
             }

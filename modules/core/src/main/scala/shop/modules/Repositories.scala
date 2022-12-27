@@ -3,8 +3,8 @@ package shop.modules
 import cats.effect._
 import shop.config.types.AppConfig
 import shop.infrastructure.HealthRepository
-import shop.infrastructure.postgres._
 import shop.infrastructure.clients._
+import shop.infrastructure.postgres._
 import shop.infrastructure.redis._
 import shop.resources.AppResources
 

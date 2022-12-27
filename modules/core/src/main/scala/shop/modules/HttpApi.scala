@@ -7,14 +7,8 @@ import org.http4s._
 import org.http4s.implicits._
 import org.http4s.server.Router
 import org.http4s.server.middleware._
-import shop.domain.auth.UserAuthPayload.{ AdminUser, CommonUser }
-import shop.domain.brand.BrandService
-import shop.domain.cart.CartService
-import shop.domain.category.CategoryService
-import shop.domain.health.HealthService
-import shop.domain.item.ItemService
-import shop.domain.order.OrderService
-import shop.http.routes.admin.{ AdminBrandRoutes, AdminCategoryRoutes, AdminItemRoutes }
+import shop.domain.auth.UserAuthPayload.{AdminUser, CommonUser}
+import shop.http.routes.admin._
 import shop.http.routes.auth._
 import shop.http.routes.brand.BrandRoutes
 import shop.http.routes.cart.CartRoutes
@@ -28,12 +22,7 @@ import shop.programs.Checkout
 import scala.concurrent.duration._
 
 final class HttpApi[F[_]: Async](
-    cartService: CartService[F],
-    brandService: BrandService[F],
-    categoryService: CategoryService[F],
-    itemService: ItemService[F],
-    orderService: OrderService[F],
-    healthService: HealthService[F],
+    services: Services[F],
     security: Security[F],
     checkout: Checkout[F]
 ) {
@@ -49,20 +38,20 @@ final class HttpApi[F[_]: Async](
   private val userRoutes   = UserRoutes[F](security.authRepo).routes
 
   // Open routes
-  private val healthRoutes   = HealthRoutes[F](healthService).routes
-  private val brandRoutes    = BrandRoutes[F](brandService).routes
-  private val categoryRoutes = CategoryRoutes[F](categoryService).routes
-  private val itemRoutes     = ItemRoutes[F](itemService).routes
+  private val healthRoutes   = HealthRoutes[F](services.health).routes
+  private val brandRoutes    = BrandRoutes[F](services.brand).routes
+  private val categoryRoutes = CategoryRoutes[F](services.category).routes
+  private val itemRoutes     = ItemRoutes[F](services.item).routes
 
   // Secured routes
-  private val cartRoutes     = CartRoutes[F](cartService).routes(userMiddleware)
+  private val cartRoutes     = CartRoutes[F](services.cart).routes(userMiddleware)
   private val checkoutRoutes = CheckoutRoutes[F](checkout).routes(userMiddleware)
-  private val orderRoutes    = OrderRoutes[F](orderService).routes(userMiddleware)
+  private val orderRoutes    = OrderRoutes[F](services.order).routes(userMiddleware)
 
   // Admin routes
-  private val adminBrandRoutes    = AdminBrandRoutes[F](brandService).routes(adminMiddleware)
-  private val adminCategoryRoutes = AdminCategoryRoutes[F](categoryService).routes(adminMiddleware)
-  private val adminItemRoutes     = AdminItemRoutes[F](itemService).routes(adminMiddleware)
+  private val adminBrandRoutes    = AdminBrandRoutes[F](services.brand).routes(adminMiddleware)
+  private val adminCategoryRoutes = AdminCategoryRoutes[F](services.category).routes(adminMiddleware)
+  private val adminItemRoutes     = AdminItemRoutes[F](services.item).routes(adminMiddleware)
 
   // Combining all the http routes
   private val openRoutes: HttpRoutes[F] =
