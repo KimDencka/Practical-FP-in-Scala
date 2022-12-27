@@ -21,7 +21,7 @@ import shop.infrastructure.HealthRepository
 import shop.infrastructure.clients._
 import shop.infrastructure.postgres._
 import shop.infrastructure.redis._
-import shop.modules.{ HttpApi, Security }
+import shop.modules.{ HttpApi, Repositories, Security, Services }
 import shop.programs.Checkout
 import shop.resources._
 
@@ -37,34 +37,23 @@ object Main extends IOApp {
             .make[IO](cfg)
             .evalMap { res =>
               Security.make[IO](cfg, res.postgres, res.redis).map { security =>
-                val itemRepo      = new ItemRepository[IO](res.postgres)
-                val cartRepo      = new CartRepository[IO](itemRepo, res.redis, cfg.cartExpiration)
-                val brandRepo     = new BrandRepository[IO](res.postgres)
-                val categoryRepo  = new CategoryRepository[IO](res.postgres)
-                val orderRepo     = new OrderRepository[IO](res.postgres)
-                val healthRepo    = new HealthRepository[IO](res.postgres, res.redis)
-                val paymentClient = new PaymentRepository[IO](cfg.paymentConfig, res.client)
-
-                val itemService     = new ItemService[IO](itemRepo)
-                val cartService     = new CartService[IO](cartRepo)
-                val brandService    = new BrandService[IO](brandRepo)
-                val categoryService = new CategoryService[IO](categoryRepo)
-                val orderService    = new OrderService[IO](orderRepo)
-                val healthService   = new HealthService[IO](healthRepo)
-                val paymentService  = new PaymentService[IO](paymentClient)
+                val repositories = Repositories.make[IO](cfg, res)
+                val services     = Services.make[IO](repositories)
 
                 val retryPolicy: RetryPolicy[IO] =
                   limitRetries[IO](cfg.checkoutConfig.retriesLimit) |+|
                     exponentialBackoff[IO](cfg.checkoutConfig.retriesBackoff)
 
-                val checkout: Checkout[IO] = Checkout[IO](paymentService, cartRepo, orderRepo, retryPolicy)
+                val checkout: Checkout[IO] =
+                  Checkout[IO](services.payment, repositories.cart, repositories.order, retryPolicy)
+
                 val api = new HttpApi[IO](
-                  cartService,
-                  brandService,
-                  categoryService,
-                  itemService,
-                  orderService,
-                  healthService,
+                  services.cart,
+                  services.brand,
+                  services.category,
+                  services.item,
+                  services.order,
+                  services.health,
                   security,
                   checkout
                 )
