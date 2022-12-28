@@ -1,11 +1,14 @@
 package shop.domain
 
+import cats.Eq
+import cats.implicits._
 import monocle.law.discipline.IsoTests
 import org.scalacheck.{ Arbitrary, Cogen, Gen }
 import shop.Generators._
 import shop.domain.brand.BrandPayload.BrandId
 import shop.domain.category.CategoryPayload.CategoryId
 import shop.domain.health.HealthPayloads.Status
+import shop.domain.health.HealthPayloads.Status.Status
 import shop.optics.IsUUID
 import weaver.FunSuite
 import weaver.discipline.Discipline
@@ -33,6 +36,7 @@ object OpticsSuite extends FunSuite with Discipline {
   implicit val catIdCogen: Cogen[CategoryId] =
     Cogen[UUID].contramap[CategoryId](_.value)
 
+  implicit val statusEq: Eq[Status] = Eq.fromUniversalEquals[Status]
   checkAll("Iso[Status._Bool]", IsoTests(Status._Bool))
 
   // we don't really need to test these as they are derived, just showing we can

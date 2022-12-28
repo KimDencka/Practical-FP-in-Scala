@@ -6,11 +6,11 @@ import cats.implicits._
 import dev.profunktor.redis4cats.log4cats._
 import eu.timepit.refined.auto._
 import org.typelevel.log4cats.slf4j.Slf4jLogger
-import org.typelevel.log4cats.{ Logger, SelfAwareStructuredLogger }
+import org.typelevel.log4cats._
 import retry.RetryPolicies._
 import retry.RetryPolicy
 import shop.config.Config
-import shop.modules.{ HttpApi, Repositories, Security, Services }
+import shop.modules._
 import shop.programs.Checkout
 import shop.resources._
 

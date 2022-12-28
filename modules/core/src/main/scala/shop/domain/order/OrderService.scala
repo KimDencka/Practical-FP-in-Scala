@@ -3,7 +3,7 @@ package shop.domain.order
 import cats.data.NonEmptyList
 import shop.domain.auth.AuthPayload.UserId
 import shop.domain.cart.CartPayload.CartItem
-import shop.domain.order.OrderPayload.{ Order, OrderId, PaymentId }
+import shop.domain.order.OrderPayload._
 import squants.market.Money
 
 class OrderService[F[_]](orderRepo: OrderAlgebra[F]) {

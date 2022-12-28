@@ -4,7 +4,6 @@ import cats._
 import cats.implicits._
 import io.circe.JsonObject
 import io.circe.syntax._
-import io.circe.refined._
 import org.http4s.circe.JsonDecoder
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.{ AuthMiddleware, Router }

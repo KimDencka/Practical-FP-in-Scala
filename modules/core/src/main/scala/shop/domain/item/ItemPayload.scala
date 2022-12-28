@@ -9,11 +9,13 @@ import eu.timepit.refined.auto._
 import eu.timepit.refined.cats._ // DON'T REMOVE IT
 import eu.timepit.refined.string.{ Uuid, ValidBigDecimal }
 import eu.timepit.refined.types.string.NonEmptyString
+import io.circe._
+import io.circe.refined._ // DON'T REMOVE IT
 import io.estatico.newtype.macros.newtype
 import shop.domain.brand.BrandPayload.{ Brand, BrandId }
 import shop.domain.cart.CartPayload.{ CartItem, Quantity }
 import shop.domain.category.CategoryPayload.{ Category, CategoryId }
-import shop.http.utils.json._ // DON'T REMOVE IT
+import shop.http.utils.json._
 import shop.optics.uuid
 import squants.market.{ Money, USD }
 
@@ -22,12 +24,39 @@ import java.util.UUID
 object ItemPayload {
   @derive(decoder, encoder, keyDecoder, keyEncoder, eqv, show, uuid)
   @newtype case class ItemId(value: UUID)
+  object ItemId {
+    implicit val itemIdKeyEncoder: KeyEncoder[ItemId] =
+      (key: ItemId) => key.value.toString
+
+    implicit val itemIdKeyDecoder: KeyDecoder[ItemId] =
+      (key: String) => Some(ItemId(UUID.fromString(key)))
+
+    implicit val itemIdEncoder: Encoder[ItemId] =
+      Encoder.forProduct1("id")(_.value)
+
+    implicit val itemIdDecoder: Decoder[ItemId] =
+      Decoder.forProduct1("id")(ItemId.apply)
+  }
 
   @derive(decoder, encoder, eqv, show)
   @newtype case class ItemName(value: String)
+  object ItemName {
+    implicit val itemNameEncoder: Encoder[ItemName] =
+      Encoder.forProduct1("name")(_.value)
+
+    implicit val itemNameDecoder: Decoder[ItemName] =
+      Decoder.forProduct1("name")(ItemName.apply)
+  }
 
   @derive(decoder, encoder, eqv, show)
   @newtype case class ItemDescription(value: String)
+  object ItemDescription {
+    implicit val itemDescEncoder: Encoder[ItemDescription] =
+      Encoder.forProduct1("desc")(_.value)
+
+    implicit val itemDescDecoder: Decoder[ItemDescription] =
+      Decoder.forProduct1("desc")(ItemDescription.apply)
+  }
 
   @derive(decoder, encoder, eqv, show)
   case class Item(

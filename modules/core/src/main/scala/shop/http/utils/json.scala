@@ -1,8 +1,5 @@
 package shop.http.utils
 
-import eu.timepit.refined.boolean.And
-import eu.timepit.refined.collection.Size
-import eu.timepit.refined.string.{ MatchesRegex, ValidInt }
 import io.circe._
 import io.circe.refined._
 import io.estatico.newtype.Coercible
@@ -12,11 +9,9 @@ import shop.domain.auth.AuthPayload.ClaimContent
 import shop.domain.brand.BrandPayload._
 import shop.domain.cart.CartPayload.Cart
 import shop.domain.category.CategoryPayload.CategoryParam
-import shop.domain.checkout.CheckoutPayload._
 import shop.domain.item.ItemPayload._
-import shop.ext.refined._
 
-object json extends CoercibleCodecs {
+object json extends JsonCodecs {
   implicit def deriveEntityEncoder[F[_], A: Encoder]: EntityEncoder[F, A] = jsonEncoderOf[F, A]
 }
 
@@ -33,19 +28,6 @@ trait JsonCodecs extends CoercibleCodecs {
 
   implicit val itemIdParamDecoder: Decoder[ItemIdParam] =
     Decoder.forProduct1("item_id")(ItemIdParam.apply)
-
-  // --------------- CheckoutPayload ---------------
-  implicit val cardNameDecoder: Decoder[CardName] =
-    decoderOf[String, MatchesRegex[Rgx]].map(CardName.apply)
-
-  implicit val cardNumberDecoder: Decoder[CardNumber] =
-    decoderOf[Long, Size[16]].map(v => CardNumber(v))
-
-  implicit val cardExpirationDecoder: Decoder[CardExpiration] =
-    decoderOf[String, Size[4] And ValidInt].map(v => CardExpiration(v))
-
-  implicit val cardCVVDecoder: Decoder[CardCVV] =
-    decoderOf[Int, Size[3]].map(v => CardCVV(v))
 
   // --------------- BrandPayload ---------------
   implicit val brandNameParamEncoder: Encoder[BrandNameParam] =
@@ -69,9 +51,6 @@ trait JsonCodecs extends CoercibleCodecs {
   implicit val categoryParamDecoder: Decoder[CategoryParam] =
     Decoder.forProduct1("name")(CategoryParam.apply)
 
-  // --------------- HealthPayload ---------------
-  implicit val statusEncoder: Encoder[Status] =
-    Encoder.forProduct1("status")(_.toString)
 }
 
 trait CoercibleCodecs {

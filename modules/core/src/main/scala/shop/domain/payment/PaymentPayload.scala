@@ -5,6 +5,7 @@ import derevo.cats.show
 import derevo.circe.magnolia.encoder
 import derevo.derive
 import shop.domain.auth.AuthPayload.UserId
+import shop.domain.auth.AuthPayload.UserId.userIdEncoder // DON'T REMOVE IT
 import shop.domain.checkout.CheckoutPayload.Card
 import squants.market.Money
 

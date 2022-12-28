@@ -7,7 +7,7 @@ import org.http4s._
 import org.http4s.implicits._
 import org.http4s.server.Router
 import org.http4s.server.middleware._
-import shop.domain.auth.UserAuthPayload.{AdminUser, CommonUser}
+import shop.domain.auth.UserAuthPayload._
 import shop.http.routes.admin._
 import shop.http.routes.auth._
 import shop.http.routes.brand.BrandRoutes

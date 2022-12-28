@@ -9,7 +9,7 @@ import org.http4s.{ AuthedRoutes, HttpRoutes }
 import shop.domain.auth.UserAuthPayload.CommonUser
 import shop.domain.cart.CartPayload.CartNotFound
 import shop.domain.checkout.CheckoutPayload.Card
-import shop.domain.order.OrderPayload.{ EmptyCartError, OrderOrPaymentError }
+import shop.domain.order.OrderPayload._
 import shop.ext.http4s.refined.RefinedRequestDecoder
 import shop.http.utils.json._
 import shop.programs.Checkout

@@ -25,7 +25,7 @@ import shop.domain.item.ItemAlgebra
 import shop.domain.item.ItemPayload._
 import shop.domain.user.UserAlgebra
 import shop.effects.GenUUID
-import shop.infrastructure.redis.{ AuthRepository, CartRepository, UserAuthRepository }
+import shop.infrastructure.redis._
 
 import java.util.UUID
 

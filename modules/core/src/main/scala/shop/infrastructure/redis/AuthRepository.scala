@@ -5,12 +5,15 @@ import cats.syntax.all._
 import dev.profunktor.auth.jwt.JwtToken
 import dev.profunktor.redis4cats.RedisCommands
 import io.circe.syntax._
-import shop.auth.{ Crypto, Tokens }
+import shop.auth.{Crypto, Tokens}
 import shop.config.types.TokenExpiration
 import shop.domain.auth.AuthAlgebra
 import shop.domain.auth.AuthPayload._
+import shop.domain.auth.AuthPayload.UserName._
+import shop.domain.auth.UserAuthPayload.UserWithPassword.userWPEncoder
 import shop.domain.user.UserPayload.User
 import shop.domain.user.UserAlgebra
+import shop.domain.user.UserPayload.User.userEncoder
 
 import scala.concurrent.duration.FiniteDuration
 

@@ -1,6 +1,6 @@
 package shop.domain.user
 
-import shop.domain.auth.AuthPayload.{ EncryptedPassword, UserId, UserName }
+import shop.domain.auth.AuthPayload._
 import shop.domain.auth.UserAuthPayload.UserWithPassword
 
 trait UserAlgebra[F[_]] {

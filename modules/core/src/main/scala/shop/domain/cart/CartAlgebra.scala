@@ -1,7 +1,7 @@
 package shop.domain.cart
 
 import shop.domain.auth.AuthPayload.UserId
-import shop.domain.cart.CartPayload.{ Cart, CartTotal, Quantity }
+import shop.domain.cart.CartPayload._
 import shop.domain.item.ItemPayload.ItemId
 
 trait CartAlgebra[F[_]] {

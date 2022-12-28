@@ -33,12 +33,12 @@ object BrandRepository {
 
   val selectAll: Query[Void, Brand] =
     sql"""
-         SELECT * FROM brands
-       """.query(codec)
+      SELECT * FROM brands
+     """.query(codec)
 
   val insertBrand: Command[Brand] =
     sql"""
-         INSERT INTO brands
-         VALUES ($codec)
-       """.command
+      INSERT INTO brands
+      VALUES ($codec)
+      """.command
 }

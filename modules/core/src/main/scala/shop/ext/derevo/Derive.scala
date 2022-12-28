@@ -1,6 +1,6 @@
 package shop.ext.derevo
 
-import derevo.{ Derivation, NewTypeDerivation }
+import derevo._
 
 import scala.annotation.implicitNotFound
 

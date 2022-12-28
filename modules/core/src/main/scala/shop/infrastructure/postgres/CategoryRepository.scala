@@ -33,12 +33,12 @@ object CategoryRepository {
 
   val selectAll: Query[Void, Category] =
     sql"""
-         SELECT * FROM brands
-       """.query(codec)
+      SELECT * FROM categories
+     """.query(codec)
 
   val insertCategory: Command[Category] =
     sql"""
-         INSERT INTO brands
-         VALUES ($codec)
-       """.command
+      INSERT INTO categories
+      VALUES ($codec)
+      """.command
 }

@@ -9,7 +9,7 @@ import shop.domain.item.ItemPayload._
 import shop.domain.order.OrderAlgebra
 import shop.domain.order.OrderPayload._
 import shop.effects.GenUUID
-import shop.http.utils.json.coercibleKeyEncoder
+import shop.http.utils.json._
 import shop.infrastructure.postgres.OrderRepository._
 import shop.sql.codecs._
 import skunk._
@@ -64,20 +64,20 @@ object OrderRepository {
 
   val selectByUserId: Query[UserId, Order] =
     sql"""
-        SELECT * FROM orders
-        WHERE user_id = $userId
-       """.query(decoder)
+      SELECT * FROM orders
+      WHERE user_id = $userId
+     """.query(decoder)
 
   val selectByUserIdAndOrderId: Query[UserId ~ OrderId, Order] =
     sql"""
-        SELECT * FROM orders
-        WHERE user_id = $userId
-        AND uuid = $orderId
-       """.query(decoder)
+      SELECT * FROM orders
+      WHERE user_id = $userId
+      AND uuid = $orderId
+     """.query(decoder)
 
   val insertOrder: Command[UserId ~ Order] =
     sql"""
-        INSERT INTO orders
-        VALUES ($encoder)
-       """.command
+      INSERT INTO orders
+      VALUES ($encoder)
+     """.command
 }

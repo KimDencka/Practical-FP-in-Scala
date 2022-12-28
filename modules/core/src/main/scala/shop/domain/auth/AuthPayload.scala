@@ -5,9 +5,10 @@ import derevo.circe.magnolia.{ decoder, encoder }
 import derevo.derive
 import eu.timepit.refined.auto._
 import eu.timepit.refined.types.string.NonEmptyString
+import io.circe._
 import io.estatico.newtype.macros.newtype
 import shop.optics.uuid
-import shop.http.utils.json._ // DON'T REMOVE IT
+import shop.http.utils.json._
 
 import java.util.UUID
 import javax.crypto.Cipher
@@ -16,9 +17,23 @@ import scala.util.control.NoStackTrace
 object AuthPayload {
   @derive(decoder, encoder, eqv, show, uuid)
   @newtype case class UserId(value: UUID)
+  object UserId {
+    implicit val userIdEncoder: Encoder[UserId] =
+      Encoder.forProduct1("user_id")(_.value)
+
+    implicit val userIdDecoder: Decoder[UserId] =
+      Decoder.forProduct1("user_id")(UserId.apply)
+  }
 
   @derive(decoder, encoder, eqv, show)
   @newtype case class UserName(value: String)
+  object UserName {
+    implicit val userNameEncoder: Encoder[UserName] =
+      Encoder.forProduct1("name")(_.value)
+
+    implicit val userNameDecoder: Decoder[UserName] =
+      Decoder.forProduct1("name")(UserName.apply)
+  }
 
   @derive(decoder, encoder, eqv, show)
   @newtype case class Password(value: String)

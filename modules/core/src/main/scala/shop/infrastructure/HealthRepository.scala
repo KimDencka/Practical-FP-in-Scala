@@ -5,7 +5,7 @@ import cats.effect.implicits._
 import cats.implicits._
 import dev.profunktor.redis4cats.RedisCommands
 import shop.domain.health.HealthAlgebra
-import shop.domain.health.HealthPayloads.{ AppStatus, PostgresStatus, RedisStatus, Status }
+import shop.domain.health.HealthPayloads._
 import skunk._
 import skunk.codec.all._
 import skunk.implicits._

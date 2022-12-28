@@ -17,7 +17,7 @@ import shop.domain.auth.UserAuthPayload._
 import shop.domain.auth._
 import shop.http.utils.json._
 import shop.infrastructure.postgres.UserRepository
-import shop.infrastructure.redis.{ AdminAuthRepository, AuthRepository, UserAuthRepository }
+import shop.infrastructure.redis._
 
 object Security {
   def make[F[_]: Sync](

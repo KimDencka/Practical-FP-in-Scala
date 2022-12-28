@@ -49,38 +49,37 @@ class ItemRepository[F[_]: Sync](
 }
 
 object ItemRepository {
-  val decoder: Decoder[Item] = (
-    itemId ~ itemName ~ itemDesc ~ money ~ brandId ~
-      brandName ~ categoryId ~ categoryName
-  ).map { case i ~ n ~ d ~ p ~ bi ~ bn ~ ci ~ cn =>
-    Item(i, n, d, p, Brand(bi, bn), Category(ci, cn))
-  }
+  val decoder: Decoder[Item] =
+    (itemId ~ itemName ~ itemDesc ~ money ~ brandId ~ brandName ~ categoryId ~ categoryName).map {
+      case i ~ n ~ d ~ p ~ bi ~ bn ~ ci ~ cn =>
+        Item(i, n, d, p, Brand(bi, bn), Category(ci, cn))
+    }
 
   val selectAll: Query[Void, Item] =
     sql"""
-         SELECT i.itemId, i.name, i.description, i.price, b.brandId, b.name, c.categoryId, c.name
-         FROM items AS i
-         INNER JOIN brands AS b ON i.brand_id = b.brandId
-         INNER JOIN categories AS c ON i.category_id = c.categoryId
-       """.query(decoder)
+      SELECT i.uuid, i.name, i.description, i.price, b.uuid, b.name, c.uuid, c.name
+      FROM items AS i
+      INNER JOIN brands AS b ON i.brand_id = b.uuid
+      INNER JOIN categories AS c ON i.category_id = c.uuid
+     """.query(decoder)
 
   val selectByBrand: Query[BrandName, Item] =
     sql"""
-         SELECT i.itemId, i.name, i.description, i.price, b.brandId, b.name, c.categoryId, c.name
-         FROM items AS i
-         INNER JOIN brands AS b ON i.brand_id = b.brandId
-         INNER JOIN categories AS c ON i.category_id = c.categoryId
-         WHERE b.name LIKE $brandName
-       """.query(decoder)
+      SELECT i.uuid, i.name, i.description, i.price, b.uuid, b.name, c.uuid, c.name
+      FROM items AS i
+      INNER JOIN brands AS b ON i.brand_id = b.uuid
+      INNER JOIN categories AS c ON i.category_id = c.uuid
+      WHERE b.name LIKE $brandName
+     """.query(decoder)
 
   val selectById: Query[ItemId, Item] =
     sql"""
-         SELECT i.itemId, i.name, i.description, i.price, b.brandId, b.name, c.categoryId, c.name
-         FROM items AS i
-         INNER JOIN brands AS b ON i.brand_id = b.brandId
-         INNER JOIN categories AS c ON i.category_id = c.categoryId
-         WHERE i.itemId LIKE $itemId
-       """.query(decoder)
+      SELECT i.uuid, i.name, i.description, i.price, b.uuid, b.name, c.uuid, c.name
+      FROM items AS i
+      INNER JOIN brands AS b ON i.brand_id = b.uuid
+      INNER JOIN categories AS c ON i.category_id = c.uuid
+      WHERE i.uuid = $itemId
+     """.query(decoder)
 
   val insertItem: Command[ItemId ~ CreateItem] =
     sql"""
@@ -92,9 +91,9 @@ object ItemRepository {
 
   val updateItem: Command[UpdateItem] =
     sql"""
-        UPDATE items
-        SET price = $money
-        WHERE uuid = $itemId
-       """.command.contramap(i => i.price ~ i.id)
+      UPDATE items
+      SET price = $money
+      WHERE uuid = $itemId
+     """.command.contramap(i => i.price ~ i.id)
 
 }

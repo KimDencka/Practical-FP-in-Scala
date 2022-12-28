@@ -5,11 +5,11 @@ import cats.syntax.all._
 import eu.timepit.refined.auto._
 
 import shop.config.types.PasswordSalt
-import shop.domain.auth.AuthPayload.{ DecryptCipher, EncryptCipher, EncryptedPassword, Password }
+import shop.domain.auth.AuthPayload._
 
 import java.security.SecureRandom
 import java.util.Base64
-import javax.crypto.spec.{ IvParameterSpec, PBEKeySpec, SecretKeySpec }
+import javax.crypto.spec._
 import javax.crypto.{ Cipher, SecretKeyFactory }
 
 trait Crypto {
@@ -24,7 +24,7 @@ object Crypto {
         val random  = new SecureRandom()
         val ivBytes = new Array[Byte](16)
         random.nextBytes(ivBytes)
-        val iv       = new IvParameterSpec(ivBytes);
+        val iv       = new IvParameterSpec(ivBytes)
         val salt     = passwordSalt.secret.value.getBytes("UTF-8")
         val keySpec  = new PBEKeySpec("password".toCharArray, salt, 65536, 256)
         val factory  = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1")
