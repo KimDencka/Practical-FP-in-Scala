@@ -13,6 +13,7 @@ object Dependencies {
   )
 
   val mainDependencies: Seq[sbt.ModuleID] = Seq(
+    Libraries.bcrypt,
     Libraries.cats,
     Libraries.catsEffect,
     Libraries.catsRetry,
@@ -47,8 +48,9 @@ object Dependencies {
   )
 
   object V {
+    val bcrypt        = "4.3.0"
     val cats          = "2.9.0"
-    val catsEffect    = "3.4.1"
+    val catsEffect    = "3.4.3"
     val catsRetry     = "3.1.0"
     val circe         = "0.14.2"
     val ciris         = "2.3.2"
@@ -80,11 +82,12 @@ object Dependencies {
     def derevo(artifact: String): ModuleID = "tf.tofu"    %% s"derevo-$artifact" % V.derevo
     def http4s(artifact: String): ModuleID = "org.http4s" %% s"http4s-$artifact" % V.http4s
 
-    lazy val cats       = "org.typelevel"    %% "cats-core"   % V.cats
-    lazy val catsEffect = "org.typelevel"    %% "cats-effect" % V.catsEffect
-    lazy val catsRetry  = "com.github.cb372" %% "cats-retry"  % V.catsRetry
-    lazy val squants    = "org.typelevel"    %% "squants"     % V.squants
-    lazy val fs2        = "co.fs2"           %% "fs2-core"    % V.fs2
+    lazy val bcrypt     = "com.github.t3hnar" %% "scala-bcrypt" % V.bcrypt
+    lazy val cats       = "org.typelevel"     %% "cats-core"    % V.cats
+    lazy val catsEffect = "org.typelevel"     %% "cats-effect"  % V.catsEffect
+    lazy val catsRetry  = "com.github.cb372"  %% "cats-retry"   % V.catsRetry
+    lazy val squants    = "org.typelevel"     %% "squants"      % V.squants
+    lazy val fs2        = "co.fs2"            %% "fs2-core"     % V.fs2
 
     lazy val circeCore    = circe("core")
     lazy val circeGeneric = circe("generic")
