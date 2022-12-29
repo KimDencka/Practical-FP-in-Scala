@@ -12,9 +12,9 @@ object UserPayload {
   case class User(userId: UserId, username: UserName)
   object User {
     implicit val userEncoder: Encoder[User] =
-      Encoder.forProduct2("user_id", "username")(u => (u.userId, u.username))
+      Encoder.forProduct2("userId", "username")(u => (u.userId, u.username))
 
     implicit val userDecoder: Decoder[User] =
-      Decoder.forProduct2("user_id", "username")(User.apply)
+      Decoder.forProduct2("userId", "username")(User.apply)
   }
 }

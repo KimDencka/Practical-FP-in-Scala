@@ -1,6 +1,6 @@
 package shop.http.utils
 
-import cats.syntax.all._
+import cats.implicits._
 import eu.timepit.refined._
 import eu.timepit.refined.api.{ Refined, Validate }
 import io.estatico.newtype.Coercible

@@ -21,7 +21,7 @@ final case class AdminBrandRoutes[F[_]: JsonDecoder: MonadThrow](brand: BrandSer
     AuthedRoutes.of { case ar @ POST -> Root as _ =>
       ar.req.decodeR[BrandNameParam] { bp =>
         brand.create(bp.toDomain).flatMap { id =>
-          Created(JsonObject.singleton("brand_id", id.asJson))
+          Created(JsonObject.singleton("brandId", id.asJson))
         }
       }
     }

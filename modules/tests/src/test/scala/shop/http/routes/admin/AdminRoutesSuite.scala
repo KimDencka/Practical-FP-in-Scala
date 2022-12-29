@@ -33,7 +33,7 @@ object AdminRoutesSuite extends HttpSuite {
       val req          = POST(brand, uri"/brands")
       val brandService = new BrandService[IO](new TestBrandAlgebra(id))
       val routes       = AdminBrandRoutes[IO](brandService).routes(authMiddleware(user))
-      val expected     = JsonObject.singleton("brand_id", id.asJson).asJson
+      val expected     = JsonObject.singleton("brandId", id.asJson).asJson
       expectHttpBodyAndStatus(routes, req)(expected, Status.Created)
     }
   }
@@ -49,7 +49,7 @@ object AdminRoutesSuite extends HttpSuite {
       val req          = POST(item, uri"/items")
       val brandService = new ItemService[IO](new TestItemAlgebra(id))
       val routes       = AdminItemRoutes[IO](brandService).routes(authMiddleware(user))
-      val expected     = JsonObject.singleton("item_id", id.asJson).asJson
+      val expected     = JsonObject.singleton("itemId", id.asJson).asJson
       expectHttpBodyAndStatus(routes, req)(expected, Status.Created)
     }
   }

@@ -19,10 +19,10 @@ object AuthPayload {
   @newtype case class UserId(value: UUID)
   object UserId {
     implicit val userIdEncoder: Encoder[UserId] =
-      Encoder.forProduct1("user_id")(_.value)
+      Encoder.forProduct1("userId")(_.value)
 
     implicit val userIdDecoder: Decoder[UserId] =
-      Decoder.forProduct1("user_id")(UserId.apply)
+      Decoder.forProduct1("userId")(UserId.apply)
   }
 
   @derive(decoder, encoder, eqv, show)

@@ -21,7 +21,7 @@ final case class UserRoutes[F[_]: JsonDecoder: MonadThrow](auth: AuthService[F])
         .newUser(user.username.toDomain, user.password.toDomain)
         .flatMap(Created(_))
         .recoverWith { case UserNameInUse(u) =>
-          Conflict(s"User ${u.show} already exists.")
+          Conflict(s"User '${u.show.toLowerCase.capitalize}' already exists.")
         }
     }
   }

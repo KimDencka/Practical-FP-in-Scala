@@ -2,7 +2,7 @@ package shop.effects
 
 import cats.ApplicativeError
 import cats.effect._
-import cats.syntax.all._
+import cats.implicits._
 import io.estatico.newtype.Coercible
 import io.estatico.newtype.ops._
 

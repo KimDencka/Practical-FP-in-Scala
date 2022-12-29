@@ -21,7 +21,7 @@ final case class AdminCategoryRoutes[F[_]: JsonDecoder: MonadThrow](category: Ca
     AuthedRoutes.of { case ar @ POST -> Root as _ =>
       ar.req.decodeR[CategoryParam] { c =>
         category.create(c.toDomain).flatMap { id =>
-          Created(JsonObject.singleton("category_id", id.asJson))
+          Created(JsonObject.singleton("categoryId", id.asJson))
         }
       }
     }

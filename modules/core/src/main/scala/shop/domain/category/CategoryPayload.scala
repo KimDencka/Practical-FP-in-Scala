@@ -19,7 +19,7 @@ object CategoryPayload {
 
   @newtype
   case class CategoryParam(value: NonEmptyString) {
-    def toDomain: CategoryName = CategoryName(value.toLowerCase.capitalize)
+    def toDomain: CategoryName = CategoryName(value.toLowerCase)
   }
 
   @derive(decoder, encoder, eqv, show)

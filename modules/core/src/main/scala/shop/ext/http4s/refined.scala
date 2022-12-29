@@ -1,7 +1,7 @@
 package shop.ext.http4s
 
 import cats.MonadThrow
-import cats.syntax.all._
+import cats.implicits._
 import eu.timepit.refined._
 import eu.timepit.refined.api.{ Refined, Validate }
 import io.circe.Decoder
@@ -22,7 +22,8 @@ object refined {
         case Left(e) =>
           Option(e.getCause) match {
             case Some(c) if c.getMessage.startsWith("Predicate") => BadRequest(c.getMessage)
-            case _                                               => UnprocessableEntity()
+            case Some(e)                                         => UnprocessableEntity(e.getMessage)
+            case None                                            => UnprocessableEntity("Unknown error")
           }
         case Right(a) => f(a)
       }

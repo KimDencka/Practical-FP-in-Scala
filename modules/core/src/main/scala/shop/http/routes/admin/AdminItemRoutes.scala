@@ -9,7 +9,7 @@ import org.http4s.dsl.Http4sDsl
 import org.http4s.server.{ AuthMiddleware, Router }
 import org.http4s.{ AuthedRoutes, HttpRoutes }
 import shop.domain.auth.UserAuthPayload.AdminUser
-import shop.domain.item.ItemPayload.CreateItemParam
+import shop.domain.item.ItemPayload.{ CreateItemParam, UpdateItemParam }
 import shop.domain.item.ItemService
 import shop.ext.http4s.refined._
 import shop.http.utils.json._
@@ -18,12 +18,20 @@ final case class AdminItemRoutes[F[_]: JsonDecoder: MonadThrow](item: ItemServic
   private[admin] val prefixPath = "/items"
 
   private val httpRoutes: AuthedRoutes[AdminUser, F] =
-    AuthedRoutes.of { case ar @ POST -> Root as _ =>
-      ar.req.decodeR[CreateItemParam] { i =>
-        item.create(i.toDomain).flatMap { id =>
-          Created(JsonObject.singleton("item_id", id.asJson))
+    AuthedRoutes.of {
+      case ar @ POST -> Root as _ =>
+        ar.req.decodeR[CreateItemParam] { i =>
+          println(i.name.value.value)
+          item.create(i.toDomain).flatMap { id =>
+            Created(JsonObject.singleton("itemId", id.asJson))
+          }
         }
-      }
+
+      case ar @ PUT -> Root as _ =>
+        ar.req.decodeR[UpdateItemParam] { i =>
+          item.update(i.toDomain) >> Ok()
+        }
+
     }
 
   def routes(authMiddleware: AuthMiddleware[F, AdminUser]): HttpRoutes[F] = Router(

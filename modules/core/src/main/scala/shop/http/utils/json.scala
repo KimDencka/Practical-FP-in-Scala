@@ -9,26 +9,12 @@ import shop.domain.auth.AuthPayload.ClaimContent
 import shop.domain.brand.BrandPayload._
 import shop.domain.cart.CartPayload.Cart
 import shop.domain.category.CategoryPayload.CategoryParam
-import shop.domain.item.ItemPayload._
 
 object json extends JsonCodecs {
   implicit def deriveEntityEncoder[F[_], A: Encoder]: EntityEncoder[F, A] = jsonEncoderOf[F, A]
 }
 
 trait JsonCodecs extends CoercibleCodecs {
-  // --------------- ItemPayload ---------------
-  implicit val itemNameParamDecoder: Decoder[ItemNameParam] =
-    Decoder.forProduct1("name")(ItemNameParam.apply)
-
-  implicit val itemDescriptionParamDecoder: Decoder[ItemDescriptionParam] =
-    Decoder.forProduct1("desc")(ItemDescriptionParam.apply)
-
-  implicit val priceParamDecoder: Decoder[PriceParam] =
-    Decoder.forProduct1("price")(PriceParam.apply)
-
-  implicit val itemIdParamDecoder: Decoder[ItemIdParam] =
-    Decoder.forProduct1("item_id")(ItemIdParam.apply)
-
   // --------------- BrandPayload ---------------
   implicit val brandNameParamEncoder: Encoder[BrandNameParam] =
     Encoder.forProduct1("name")(_.value)

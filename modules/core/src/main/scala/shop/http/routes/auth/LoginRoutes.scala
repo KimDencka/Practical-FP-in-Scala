@@ -21,8 +21,8 @@ final case class LoginRoutes[F[_]: JsonDecoder: MonadThrow](auth: AuthService[F]
         .login(user.username.toDomain, user.password.toDomain)
         .flatMap(Ok(_))
         .recoverWith {
-          case UserNotFound(u)    => Forbidden(s"User ${u.value} not found.")
-          case InvalidPassword(u) => Forbidden(s"Invalid password for user ${u.value}")
+          case UserNotFound(u)    => Forbidden(s"User '${u.value.toLowerCase().capitalize}' not found.")
+          case InvalidPassword(u) => Forbidden(s"Invalid password for user '${u.value.toLowerCase().capitalize}'")
         }
     }
   }

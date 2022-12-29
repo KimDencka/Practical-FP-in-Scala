@@ -32,10 +32,10 @@ object ItemPayload {
       (key: String) => Some(ItemId(UUID.fromString(key)))
 
     implicit val itemIdEncoder: Encoder[ItemId] =
-      Encoder.forProduct1("item_id")(_.value)
+      Encoder.forProduct1("itemId")(_.value)
 
     implicit val itemIdDecoder: Decoder[ItemId] =
-      Decoder.forProduct1("item_id")(ItemId.apply)
+      Decoder.forProduct1("itemId")(ItemId.apply)
   }
 
   @derive(decoder, encoder, eqv, show)
@@ -52,10 +52,10 @@ object ItemPayload {
   @newtype case class ItemDescription(value: String)
   object ItemDescription {
     implicit val itemDescEncoder: Encoder[ItemDescription] =
-      Encoder.forProduct1("desc")(_.value)
+      Encoder.forProduct1("description")(_.value)
 
     implicit val itemDescDecoder: Decoder[ItemDescription] =
-      Decoder.forProduct1("desc")(ItemDescription.apply)
+      Decoder.forProduct1("description")(ItemDescription.apply)
   }
 
   @derive(decoder, encoder, eqv, show)

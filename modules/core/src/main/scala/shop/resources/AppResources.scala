@@ -2,7 +2,7 @@ package shop.resources
 
 import cats.effect.std.Console
 import cats.effect.{ Concurrent, Resource }
-import cats.syntax.all._
+import cats.implicits._
 import dev.profunktor.redis4cats.effect.MkRedis
 import dev.profunktor.redis4cats.{ Redis, RedisCommands }
 import eu.timepit.refined.auto._

@@ -2,7 +2,7 @@ package shop.effects
 
 import cats.effect._
 import cats.effect.std.Supervisor
-import cats.syntax.all._
+import cats.implicits._
 
 import scala.concurrent.duration.FiniteDuration
 

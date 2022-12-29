@@ -1,7 +1,7 @@
 package shop.auth
 
 import cats.Monad
-import cats.syntax.all._
+import cats.implicits._
 import dev.profunktor.auth.jwt._
 import eu.timepit.refined.auto._
 import io.circe.syntax._
