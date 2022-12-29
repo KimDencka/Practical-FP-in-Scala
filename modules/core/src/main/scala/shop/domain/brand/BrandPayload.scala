@@ -21,10 +21,10 @@ object BrandPayload {
   @newtype case class BrandId(value: UUID)
   object BrandId {
     implicit val brandIdEncoder: Encoder[BrandId] =
-      Encoder.forProduct1("id")(_.value)
+      Encoder.forProduct1("brand_id")(_.value)
 
     implicit val brandIdDecoder: Decoder[BrandId] =
-      Decoder.forProduct1("id")(BrandId.apply)
+      Decoder.forProduct1("brand_id")(BrandId.apply)
   }
 
   @derive(decoder, encoder, eqv, show)

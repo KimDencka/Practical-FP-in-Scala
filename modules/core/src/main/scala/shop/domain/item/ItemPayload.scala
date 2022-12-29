@@ -32,10 +32,10 @@ object ItemPayload {
       (key: String) => Some(ItemId(UUID.fromString(key)))
 
     implicit val itemIdEncoder: Encoder[ItemId] =
-      Encoder.forProduct1("id")(_.value)
+      Encoder.forProduct1("item_id")(_.value)
 
     implicit val itemIdDecoder: Decoder[ItemId] =
-      Decoder.forProduct1("id")(ItemId.apply)
+      Decoder.forProduct1("item_id")(ItemId.apply)
   }
 
   @derive(decoder, encoder, eqv, show)

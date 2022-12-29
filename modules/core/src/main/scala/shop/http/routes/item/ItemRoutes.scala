@@ -12,7 +12,7 @@ import shop.http.utils.params._
 final case class ItemRoutes[F[_]: Monad](item: ItemService[F]) extends Http4sDsl[F] {
   private[routes] val prefixPath = "/items"
 
-  object BrandNameQueryParam extends OptionalQueryParamDecoderMatcher[BrandNameParam]("brand")
+  private object BrandNameQueryParam extends OptionalQueryParamDecoderMatcher[BrandNameParam]("brand")
 
   private val httpRoutes: HttpRoutes[F] = HttpRoutes.of[F] { case GET -> Root :? BrandNameQueryParam(brand) =>
     Ok(brand.fold(item.findAll)(b => item.findByBrand(b.toDomain)))

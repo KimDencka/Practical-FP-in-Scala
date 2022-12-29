@@ -9,6 +9,7 @@ import pdi.jwt.JwtClaim
 import shop.domain.auth.UserAuthAlgebra
 import shop.domain.auth.UserAuthPayload.CommonUser
 import shop.domain.user.UserPayload.User
+import shop.domain.user.UserPayload.User.userDecoder
 
 class UserAuthRepository[F[_]: Functor](
     redis: RedisCommands[F, String, String]

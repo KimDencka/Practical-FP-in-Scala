@@ -4,9 +4,11 @@ package order
 import derevo.cats.{ eqv, show }
 import derevo.circe.magnolia.{ decoder, encoder }
 import derevo.derive
+import io.circe._
 import io.estatico.newtype.macros.newtype
 import shop.domain.cart.CartPayload.Quantity
 import shop.domain.item.ItemPayload.ItemId
+import shop.http.utils.json._
 import shop.optics.uuid
 import squants.market.Money
 
@@ -27,6 +29,13 @@ object OrderPayload {
       items: Map[ItemId, Quantity],
       total: Money
   )
+  object Order {
+    implicit val mapEncoder: Encoder[Map[ItemId, Quantity]] =
+      Encoder.encodeMap[ItemId, Quantity]
+
+    implicit val mapDecoder: Decoder[Map[ItemId, Quantity]] =
+      Decoder.decodeMap[ItemId, Quantity]
+  }
 
   @derive(show)
   case object EmptyCartError extends NoStackTrace

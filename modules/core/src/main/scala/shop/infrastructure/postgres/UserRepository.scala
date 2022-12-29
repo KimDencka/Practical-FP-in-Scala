@@ -59,6 +59,6 @@ object UserRepository {
   val insertUser: Command[User ~ EncryptedPassword] =
     sql"""
          INSERT INTO users
-         VALUE ($codec)
+         VALUES ($codec)
        """.command
 }

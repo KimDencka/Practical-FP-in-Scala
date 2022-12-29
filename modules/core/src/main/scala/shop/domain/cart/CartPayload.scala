@@ -26,6 +26,5 @@ object CartPayload {
   @derive(decoder, encoder, eqv, show)
   case class CartTotal(items: List[CartItem], total: Money)
 
-  @derive(decoder, encoder)
   case class CartNotFound(userId: UserId) extends NoStackTrace
 }
