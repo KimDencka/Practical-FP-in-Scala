@@ -5,7 +5,7 @@ import cats.syntax.all._
 import dev.profunktor.auth.jwt.JwtToken
 import dev.profunktor.redis4cats.RedisCommands
 import io.circe.syntax._
-import shop.auth.{Crypto, Tokens}
+import shop.auth.{ Crypto, Tokens }
 import shop.config.types.TokenExpiration
 import shop.domain.auth.AuthAlgebra
 import shop.domain.auth.AuthPayload._
@@ -43,7 +43,7 @@ class AuthRepository[F[_]: MonadThrow](
   override def login(username: UserName, password: Password): F[JwtToken] =
     userRepo.find(username).flatMap {
       case None => UserNotFound(username).raiseError[F, JwtToken]
-      case Some(user) if user.password =!= crypto.encrypt(password) =>
+      case Some(user) if !crypto.decrypt(password, user.password) =>
         InvalidPassword(user.name).raiseError[F, JwtToken]
       case Some(user) =>
         redis.get(username.show).flatMap {
