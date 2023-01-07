@@ -3,7 +3,6 @@ package shop.http.clients
 import cats.data.Kleisli
 import cats.effect.IO
 import eu.timepit.refined.auto._
-import org.http4s.circe.CirceEntityCodec._
 import org.http4s.client.Client
 import org.http4s.dsl.io._
 import org.http4s.implicits._
@@ -13,6 +12,7 @@ import shop.Generators._
 import shop.config.types.{ PaymentConfig, PaymentURI }
 import shop.domain.order.OrderPayload.{ PaymentError, PaymentId }
 import shop.domain.payment.PaymentPayload._
+import shop.http.utils.json._
 import shop.infrastructure.clients.PaymentRepository
 import weaver.SimpleIOSuite
 import weaver.scalacheck.Checkers
