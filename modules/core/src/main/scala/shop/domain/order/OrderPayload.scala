@@ -18,9 +18,23 @@ import scala.util.control.NoStackTrace
 object OrderPayload {
   @derive(decoder, encoder, eqv, show, uuid)
   @newtype case class OrderId(value: UUID)
+  object OrderId {
+    implicit val orderIdEncoder: Encoder[OrderId] =
+      Encoder.forProduct1("id")(_.value)
+
+    implicit val orderIdDecoder: Decoder[OrderId] =
+      Decoder.forProduct1("id")(OrderId.apply)
+  }
 
   @derive(decoder, encoder, eqv, show, uuid)
   @newtype case class PaymentId(value: UUID)
+  object PaymentId {
+    implicit val paymentIdEncoder: Encoder[PaymentId] =
+      Encoder.forProduct1("id")(_.value)
+
+    implicit val paymentIdDecoder: Decoder[PaymentId] =
+      Decoder.forProduct1("id")(PaymentId.apply)
+  }
 
   @derive(decoder, encoder)
   case class Order(

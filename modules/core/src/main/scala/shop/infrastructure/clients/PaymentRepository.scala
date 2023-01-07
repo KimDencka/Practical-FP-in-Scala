@@ -10,6 +10,7 @@ import org.http4s.client._
 import org.http4s.client.dsl.Http4sClientDsl
 import shop.config.types.PaymentConfig
 import shop.domain.order.OrderPayload.{ PaymentError, PaymentId }
+import shop.domain.order.OrderPayload.PaymentId.paymentIdDecoder
 import shop.domain.payment.PaymentAlgebra
 import shop.domain.payment.PaymentPayload.Payment
 
