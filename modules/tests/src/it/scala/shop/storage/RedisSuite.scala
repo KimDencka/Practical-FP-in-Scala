@@ -4,7 +4,7 @@ import cats.effect._
 import cats.implicits._
 import dev.profunktor.auth.jwt._
 import dev.profunktor.redis4cats.log4cats._
-import dev.profunktor.redis4cats.{Redis, RedisCommands}
+import dev.profunktor.redis4cats.{ Redis, RedisCommands }
 import eu.timepit.refined.auto._
 import eu.timepit.refined.cats._
 import org.typelevel.log4cats.SelfAwareStructuredLogger
@@ -16,7 +16,7 @@ import scala.concurrent.duration._
 import shop.config.types._
 import shop.domain.auth.UserAuthPayload._
 import shop.Generators._
-import shop.auth.{Crypto, JwtExpire, Tokens}
+import shop.auth.{ Crypto, JwtExpire, Tokens }
 import shop.domain.auth.AuthPayload._
 import shop.domain.brand.BrandPayload._
 import shop.domain.cart.CartPayload.Cart

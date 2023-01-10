@@ -33,7 +33,6 @@ object Dependencies {
     Libraries.http4sClient,
     Libraries.http4sCirce,
     Libraries.http4sJwtAuth,
-    Libraries.javaxCrypto,
     Libraries.log4cats,
     Libraries.logback % Runtime,
     Libraries.monocleCore,
@@ -55,7 +54,6 @@ object Dependencies {
     val circe         = "0.14.2"
     val ciris         = "2.3.2"
     val derevo        = "0.13.0"
-    val javaxCrypto   = "1.0.1"
     val fs2           = "3.4.0"
     val http4s        = "0.23.1"
     val http4sJwtAuth = "1.0.0"
@@ -116,8 +114,6 @@ object Dependencies {
 
     lazy val log4cats = "org.typelevel" %% "log4cats-slf4j" % V.log4cats
     lazy val newtype  = "io.estatico"   %% "newtype"        % V.newtype
-
-    lazy val javaxCrypto = "javax.xml.crypto" % "jsr105-api" % V.javaxCrypto
 
     lazy val redis4catsEffects  = "dev.profunktor" %% "redis4cats-effects"  % V.redis4cats
     lazy val redis4catsLog4cats = "dev.profunktor" %% "redis4cats-log4cats" % V.redis4cats

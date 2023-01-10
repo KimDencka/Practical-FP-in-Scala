@@ -156,7 +156,7 @@ object Generators {
     } yield User(i, n)
 
   val adminUserGen: Gen[AdminUser] =
-    userGen.map(x => AdminUser(x ))
+    userGen.map(x => AdminUser(x))
 
   val commonUserGen: Gen[CommonUser] =
     userGen.map(x => CommonUser(x))
